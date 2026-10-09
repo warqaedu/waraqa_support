@@ -1,0 +1,860 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ورقة | Warqa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@500;600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #050C16;
+  --surface: #0A1626;
+  --surface-2: #0F1F35;
+  --line: rgba(255, 255, 255, 0.09);
+  --fg: #FFFFFF;
+  --muted: #A7B5C9;
+  --neon: #00D9FF;
+  --neon-ink: #021018;
+  --neon-soft: rgba(0, 217, 255, 0.12);
+  --neon-glow: rgba(0, 217, 255, 0.35);
+  --font-display: 'Alexandria', 'Segoe UI', Tahoma, sans-serif;
+  --font-body: 'IBM Plex Sans Arabic', 'Segoe UI', Tahoma, sans-serif;
+  --gutter: clamp(16px, 4vw, 40px);
+  --fold: 30px;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 90px; }
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.8;
+  padding-inline: 0;
+  overflow-x: hidden;
+}
+a { color: inherit; text-decoration: none; }
+img { display: block; max-width: 100%; }
+h1, h2, h3 { font-family: var(--font-display); line-height: 1.35; margin: 0; text-wrap: balance; }
+p { margin: 0; }
+:focus-visible { outline: 2px solid var(--neon); outline-offset: 3px; }
+
+.wrap { width: 100%; max-width: 1180px; margin-inline: auto; padding-inline: var(--gutter); }
+.section { padding-block: clamp(64px, 9vw, 112px); position: relative; }
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: var(--font-display); font-size: 14px; font-weight: 600;
+  color: var(--neon); letter-spacing: 0.04em;
+}
+.eyebrow::before { content: ""; width: 26px; height: 2px; background: var(--neon); box-shadow: 0 0 12px var(--neon-glow); }
+.section-head { display: grid; gap: 14px; max-width: 640px; margin-bottom: clamp(32px, 5vw, 56px); }
+.section-head h2 { font-size: clamp(28px, 4.2vw, 44px); font-weight: 700; }
+.section-head p { color: var(--muted); }
+
+.sheet {
+  position: relative;
+  background: var(--surface);
+  clip-path: polygon(0 0, calc(100% - var(--fold)) 0, 100% var(--fold), 100% 100%, 0 100%);
+  border-radius: 6px 0 6px 6px;
+}
+.sheet::before {
+  content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 1;
+  border: 1px solid var(--line); border-radius: inherit;
+  clip-path: inherit;
+}
+.sheet::after {
+  content: ""; position: absolute; top: 0; right: 0; width: var(--fold); height: var(--fold);
+  background: var(--neon);
+  clip-path: polygon(0 0, 0 100%, 100% 100%);
+  opacity: 0.9; z-index: 2;
+}
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  font-family: var(--font-display); font-weight: 600; font-size: 16px;
+  padding: 14px 28px; border-radius: 999px; border: 1.5px solid transparent;
+  cursor: pointer; transition: transform .25s ease, box-shadow .25s ease, background .25s ease, color .25s ease, border-color .25s ease;
+  line-height: 1.4; white-space: nowrap;
+}
+.btn svg { width: 18px; height: 18px; flex: none; transition: transform .25s ease; }
+.btn-primary { background: var(--neon); color: var(--neon-ink); box-shadow: 0 0 0 0 var(--neon-glow); }
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 32px var(--neon-glow); }
+.btn-primary:hover svg { transform: translateX(-4px); }
+.btn-ghost { color: var(--fg); border-color: rgba(255,255,255,.28); background: transparent; }
+.btn-ghost:hover { border-color: var(--neon); color: var(--neon); transform: translateY(-2px); }
+
+.site-header {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 50;
+  background: var(--bg);
+  border-bottom: 1px solid var(--line);
+  transition: box-shadow .3s ease;
+}
+.site-header.scrolled { box-shadow: 0 10px 40px rgba(0,0,0,.55); }
+.header-row { display: flex; align-items: center; justify-content: space-between; gap: 20px; min-height: 76px; }
+.brand { display: flex; align-items: center; }
+.brand img { height: 62px; width: auto; mix-blend-mode: lighten; }
+.nav { display: flex; gap: clamp(14px, 2.6vw, 34px); font-size: 15.5px; font-weight: 500; }
+.nav a { position: relative; padding-block: 6px; color: var(--muted); transition: color .2s; }
+.nav a::after { content: ""; position: absolute; inset-inline: 0; bottom: 0; height: 2px; background: var(--neon); transform: scaleX(0); transform-origin: right; transition: transform .25s ease; }
+.nav a:hover { color: var(--fg); }
+.nav a:hover::after { transform: scaleX(1); }
+.header-cta { padding: 10px 22px; font-size: 15px; }
+
+.hero { padding-block: clamp(48px, 7vw, 96px) clamp(56px, 8vw, 104px); overflow: hidden; }
+.hero::before {
+  content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background-image:
+    linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(ellipse 70% 80% at 30% 40%, #000 20%, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse 70% 80% at 30% 40%, #000 20%, transparent 75%);
+  opacity: .8;
+}
+.hero::after {
+  content: ""; position: absolute; width: 520px; height: 520px; border-radius: 50%;
+  left: -120px; top: 10%; background: radial-gradient(circle, var(--neon-glow), transparent 65%);
+  filter: blur(40px); opacity: .35; pointer-events: none; z-index: 0;
+}
+.hero-grid { position: relative; z-index: 1; display: grid; grid-template-columns: 1.1fr 0.9fr; gap: clamp(32px, 5vw, 72px); align-items: center; }
+.hero-copy { display: grid; gap: 24px; justify-items: start; }
+.hero h1 { font-size: clamp(36px, 6vw, 68px); font-weight: 800; line-height: 1.25; }
+.hero h1 .accent { color: var(--neon); text-shadow: 0 0 28px var(--neon-glow); }
+.hero p.lead { font-size: clamp(17px, 2vw, 20px); color: var(--muted); max-width: 540px; }
+.hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 8px; }
+
+.stack { position: relative; aspect-ratio: 1 / 1.05; width: min(100%, 440px); margin-inline: auto; }
+.page {
+  position: absolute; width: 62%; aspect-ratio: 3 / 4; border-radius: 8px 0 8px 8px;
+  background: #fff; clip-path: polygon(0 0, calc(100% - 34px) 0, 100% 34px, 100% 100%, 0 100%);
+  box-shadow: 0 30px 60px rgba(0,0,0,.5);
+  padding: 22% 14% 0; display: grid; align-content: start; gap: 12px;
+}
+.page::after { content: ""; position: absolute; top: 0; right: 0; width: 34px; height: 34px; background: var(--neon); clip-path: polygon(0 0, 0 100%, 100% 100%); }
+.page i { display: block; height: 8px; border-radius: 4px; background: #0b1424; }
+.page i:nth-child(2) { width: 82%; }
+.page i:nth-child(3) { width: 56%; }
+.page.p1 { inset-inline-start: 0; top: 14%; transform: rotate(-9deg); background: var(--surface-2); }
+.page.p1 i { background: rgba(255,255,255,.18); }
+.page.p2 { inset-inline-end: 2%; top: 6%; transform: rotate(7deg); background: #cfeffa; animation: drift 7s ease-in-out infinite; }
+.page.p3 { inset-inline-start: 14%; top: 22%; transform: rotate(-1deg); animation: drift 8s ease-in-out -2s infinite; box-shadow: 0 0 0 1.5px var(--neon), 0 30px 70px rgba(0,0,0,.6), 0 0 60px var(--neon-glow); }
+@keyframes drift { 0%, 100% { translate: 0 0; } 50% { translate: 0 -12px; } }
+.chip {
+  position: absolute; z-index: 3; font-family: var(--font-display); font-size: 13.5px; font-weight: 600;
+  padding: 8px 16px; border-radius: 999px; background: var(--bg); color: var(--neon);
+  border: 1px solid rgba(0,217,255,.5); box-shadow: 0 0 22px rgba(0,217,255,.2);
+  animation: drift 6s ease-in-out infinite;
+}
+.chip.c1 { top: 4%; inset-inline-start: 6%; animation-delay: -1s; }
+.chip.c2 { top: 44%; inset-inline-end: -2%; animation-delay: -3s; }
+.chip.c3 { bottom: 10%; inset-inline-start: 2%; animation-delay: -4.5s; }
+.chip.c4 { bottom: 2%; inset-inline-end: 12%; animation-delay: -2s; color: var(--fg); border-color: var(--line); }
+
+.about-grid { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: clamp(28px, 6vw, 80px); align-items: start; }
+.about-grid h2 { font-size: clamp(28px, 4.2vw, 44px); font-weight: 700; }
+.about-body { display: grid; gap: 20px; color: var(--muted); font-size: 18px; }
+.about-body strong { color: var(--fg); font-weight: 600; }
+.audience { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 6px; }
+.audience span { font-family: var(--font-display); font-size: 14px; padding: 7px 16px; border-radius: 999px; border: 1px solid var(--line); color: var(--fg); background: var(--surface); }
+
+.services { background: linear-gradient(180deg, transparent, rgba(10,22,38,.7) 20%, rgba(10,22,38,.7) 80%, transparent); }
+.svc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+.svc { padding: 36px 30px 34px; display: grid; gap: 18px; align-content: start; transition: transform .3s ease, background .3s ease; }
+.svc:hover { transform: translateY(-6px); background: var(--surface-2); }
+.svc:hover .ico { box-shadow: 0 0 34px var(--neon-glow); background: var(--neon); color: var(--neon-ink); }
+.ico { width: 58px; height: 58px; border-radius: 14px; display: grid; place-items: center; color: var(--neon); background: var(--neon-soft); border: 1px solid rgba(0,217,255,.35); transition: all .3s ease; }
+.ico svg { width: 28px; height: 28px; }
+.svc h3 { font-size: 21px; font-weight: 700; }
+.svc ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; color: var(--muted); font-size: 16px; }
+.svc li { display: flex; gap: 12px; align-items: flex-start; }
+.svc li::before { content: ""; flex: none; width: 8px; height: 8px; margin-top: 11px; background: var(--neon); transform: rotate(45deg); box-shadow: 0 0 8px var(--neon-glow); }
+
+.filters { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 28px; }
+.filter { font-family: var(--font-display); font-size: 14.5px; font-weight: 500; padding: 9px 20px; border-radius: 999px; background: transparent; color: var(--muted); border: 1px solid var(--line); cursor: pointer; transition: all .2s; }
+.filter:hover { color: var(--fg); border-color: rgba(255,255,255,.35); }
+.filter[aria-pressed="true"] { background: var(--neon); color: var(--neon-ink); border-color: var(--neon); }
+.masonry { columns: 3; column-gap: 20px; }
+.work { break-inside: avoid; margin: 0 0 20px; position: relative; overflow: hidden; background: var(--surface); border-radius: 8px; border: 1px solid var(--line); cursor: zoom-in; display: block; width: 100%; padding: 0; text-align: start; color: inherit; font: inherit; }
+.work[hidden] { display: none !important; }
+.work img { width: 100%; height: auto; transition: transform .6s ease; }
+.work:hover img { transform: scale(1.05); }
+.work-cap { position: absolute; inset-inline: 0; bottom: 0; padding: 40px 18px 16px; display: grid; gap: 2px; background: linear-gradient(180deg, transparent, rgba(5,12,22,.94)); transform: translateY(8px); opacity: 0; transition: all .3s ease; }
+.work:hover .work-cap, .work:focus-visible .work-cap { transform: none; opacity: 1; }
+.work-cap b { font-family: var(--font-display); font-size: 16px; font-weight: 600; }
+.work-cap small { color: var(--neon); font-size: 13px; }
+.work.reel { aspect-ratio: 9 / 14; background: radial-gradient(circle at 50% 35%, rgba(0,217,255,.22), transparent 60%), var(--surface); display: grid; place-items: center; cursor: default; }
+.reel-inner { display: grid; gap: 14px; justify-items: center; text-align: center; padding: 24px; }
+.play { width: 74px; height: 74px; border-radius: 50%; display: grid; place-items: center; background: var(--neon); color: var(--neon-ink); box-shadow: 0 0 0 10px var(--neon-soft), 0 0 50px var(--neon-glow); animation: pulse 2.4s ease-in-out infinite; }
+.play svg { width: 28px; height: 28px; margin-inline-end: 3px; }
+@keyframes pulse { 50% { box-shadow: 0 0 0 18px rgba(0,217,255,.05), 0 0 70px var(--neon-glow); } }
+.reel-inner b { font-family: var(--font-display); font-size: 18px; }
+.reel-inner small { color: var(--muted); font-size: 14px; }
+
+/* بطاقة القلب ثلاثية الأبعاد: إنفوجرافيك ثنائي اللغة (عربي ← إنجليزي) */
+.work.flip { overflow: visible; cursor: pointer; background: transparent; border: 0; border-radius: 8px; aspect-ratio: 3375 / 4219; perspective: 1400px; -webkit-tap-highlight-color: transparent; }
+.work.flip:focus-visible { outline: 2px solid var(--neon); outline-offset: 3px; }
+.flip-inner { position: relative; width: 100%; height: 100%; transform-style: preserve-3d; transition: transform .8s cubic-bezier(.45, .05, .2, 1); }
+.flip-face { position: absolute; inset: 0; overflow: hidden; border-radius: 8px; border: 1px solid var(--line); background: var(--surface); backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+.flip-face img { width: 100%; height: 100%; object-fit: cover; transform: none; }
+.work.flip:hover img { transform: none; }
+.flip-back { transform: rotateY(180deg); }
+.flip.is-flipped .flip-inner { transform: rotateY(180deg); }
+.flip-badge { position: absolute; top: 12px; inset-inline-start: 12px; z-index: 2; display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-display); font-size: 12.5px; font-weight: 600; line-height: 1; padding: 7px 12px; border-radius: 999px; color: var(--neon); background: rgba(5,12,22,.72); border: 1px solid rgba(0,217,255,.4); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); pointer-events: none; }
+.flip-badge svg { width: 14px; height: 14px; }
+@media (hover: hover) {
+  .flip:hover .flip-inner, .flip:focus-visible .flip-inner { transform: rotateY(180deg); }
+}
+@media (hover: none) {
+  .flip .work-cap { opacity: 1; transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .flip-inner { transition: none; }
+}
+
+.lightbox { position: fixed; inset: 0; z-index: 100; background: rgba(2,6,12,.92); display: grid; place-items: center; padding: 24px; cursor: zoom-out; }
+.lightbox[hidden] { display: none !important; }
+.lightbox figure { margin: 0; max-width: min(92vw, 1100px); display: grid; gap: 14px; justify-items: center; }
+.lightbox img { max-height: 80vh; width: auto; border-radius: 8px; box-shadow: 0 0 80px rgba(0,217,255,.18); }
+.lightbox figcaption { font-family: var(--font-display); color: var(--fg); text-align: center; }
+.lb-close { position: absolute; top: calc(18px + env(safe-area-inset-top, 0px)); inset-inline-start: 18px; width: 46px; height: 46px; border-radius: 50%; border: 1px solid rgba(255,255,255,.3); background: var(--bg); color: var(--fg); cursor: pointer; display: grid; place-items: center; }
+.lb-close:hover { border-color: var(--neon); color: var(--neon); }
+
+.why-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+.why { padding: 32px 26px; display: grid; gap: 14px; align-content: start; }
+.why .big { font-family: var(--font-display); font-size: 15px; font-weight: 600; color: var(--neon); letter-spacing: .12em; direction: ltr; text-align: start; }
+.why h3 { font-size: 22px; font-weight: 700; }
+.why p { color: var(--muted); font-size: 16px; }
+.why .ico { margin-bottom: 4px; }
+
+.contact-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: clamp(24px, 4vw, 48px); align-items: start; }
+.form-card { padding: clamp(26px, 4vw, 44px); display: grid; gap: 20px; }
+.form-card h3 { font-size: 24px; font-weight: 700; }
+.field { display: grid; gap: 8px; }
+.field label { font-family: var(--font-display); font-size: 14.5px; font-weight: 500; }
+.field input, .field select, .field textarea {
+  width: 100%; font: inherit; font-size: 16px; color: var(--fg);
+  background: var(--bg); border: 1px solid rgba(255,255,255,.16); border-radius: 12px;
+  padding: 13px 16px; transition: border-color .2s, box-shadow .2s;
+}
+.field textarea { min-height: 130px; resize: vertical; }
+.field input::placeholder, .field textarea::placeholder { color: #6e7f96; }
+.field input:focus, .field select:focus, .field textarea:focus { outline: none; border-color: var(--neon); box-shadow: 0 0 0 3px var(--neon-soft); }
+.field select:invalid { color: #6e7f96; }
+.field select option { color: var(--fg); background: var(--surface); }
+.field input:-webkit-autofill { -webkit-text-fill-color: var(--fg); box-shadow: 0 0 0 100px var(--bg) inset; }
+.form-note { font-size: 14.5px; color: var(--muted); }
+.result { display: grid; gap: 14px; padding: 18px; border-radius: 12px; border: 1px solid rgba(0,217,255,.4); background: var(--neon-soft); }
+.result[hidden] { display: none !important; }
+.result b { font-family: var(--font-display); }
+.result pre { margin: 0; white-space: pre-wrap; font: inherit; font-size: 15px; color: var(--fg); background: var(--bg); border-radius: 10px; padding: 14px 16px; user-select: all; }
+.result-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+.result-actions .btn { padding: 10px 20px; font-size: 14.5px; }
+
+.channels { display: grid; gap: 16px; }
+.channels > h3 { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
+.channel { display: flex; align-items: center; gap: 18px; padding: 22px 26px; transition: transform .3s ease, background .3s ease; }
+.channel:hover { transform: translateX(-6px); background: var(--surface-2); }
+.channel:hover .arrow { color: var(--neon); transform: translateX(-4px); }
+.channel .ico { flex: none; }
+.channel-text { display: grid; line-height: 1.5; min-width: 0; }
+.channel-text b { font-family: var(--font-display); font-size: 18px; font-weight: 600; }
+.channel-text small { color: var(--muted); font-size: 14.5px; overflow-wrap: anywhere; }
+.channel .arrow { margin-inline-start: auto; width: 22px; height: 22px; color: var(--muted); transition: all .25s; flex: none; }
+
+.site-footer { border-top: 1px solid var(--line); padding-block: 36px; }
+.footer-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 20px; }
+.footer-row img { height: 72px; width: auto; mix-blend-mode: lighten; }
+.footer-row p { color: var(--muted); font-size: 14.5px; }
+.footer-links { display: flex; gap: 22px; font-size: 15px; color: var(--muted); }
+.footer-links a:hover { color: var(--neon); }
+
+@media (max-width: 980px) {
+  .hero-grid, .about-grid, .contact-grid { grid-template-columns: 1fr; }
+  .stack { max-width: 380px; }
+  .svc-grid { grid-template-columns: 1fr; }
+  .why-grid { grid-template-columns: repeat(2, 1fr); }
+  .masonry { columns: 2; }
+}
+@media (max-width: 760px) {
+  .nav { display: none; }
+  .brand img { height: 54px; }
+  .header-row { min-height: 68px; }
+}
+@media (max-width: 768px) {
+  :root { --gutter: 18px; --fold: 24px; }
+  body { font-size: 16px; line-height: 1.75; }
+  .section { padding-block: 52px; }
+  .eyebrow { font-size: 13px; gap: 8px; }
+  .eyebrow::before { width: 20px; }
+  .section-head { gap: 10px; margin-bottom: 28px; }
+  .section-head h2, .about-grid h2 { font-size: 25px; line-height: 1.4; }
+  .section-head p { font-size: 15.5px; }
+  .btn { font-size: 15px; padding: 12px 22px; }
+  .site-header .header-row { min-height: 62px; gap: 12px; }
+  .brand img { height: 48px; }
+  .header-cta { padding: 8px 16px; font-size: 14px; }
+  .hero { padding-block: 34px 44px; }
+  .hero-grid { gap: 28px; }
+  .hero-copy { gap: 16px; }
+  .hero h1 { font-size: 30px; line-height: 1.35; }
+  .hero p.lead { font-size: 16px; }
+  .hero-actions { gap: 10px; width: 100%; }
+  .stack { max-width: 290px; }
+  .chip { font-size: 12px; padding: 6px 12px; }
+  .about-grid { gap: 22px; }
+  .about-body { font-size: 16px; gap: 14px; }
+  .audience span { font-size: 13px; padding: 6px 13px; }
+  .svc-grid { grid-template-columns: 1fr; gap: 16px; }
+  .svc { padding: 26px 22px; gap: 14px; }
+  .svc h3 { font-size: 19px; }
+  .svc ul { font-size: 15.5px; gap: 10px; }
+  .ico { width: 50px; height: 50px; border-radius: 12px; }
+  .ico svg { width: 24px; height: 24px; }
+  .filters { gap: 8px; margin-bottom: 20px; }
+  .filter { font-size: 13.5px; padding: 8px 15px; }
+  .masonry { column-gap: 12px; }
+  .work { margin-bottom: 12px; }
+  .lightbox { padding: 12px; }
+  .why-grid { grid-template-columns: 1fr; gap: 14px; }
+  .why { padding: 24px 22px; gap: 10px; }
+  .why h3 { font-size: 20px; }
+  .why p { font-size: 15.5px; }
+  .contact-grid { grid-template-columns: 1fr; gap: 24px; }
+  .form-card { padding: 26px 20px; gap: 16px; }
+  .form-card h3, .channels > h3 { font-size: 20px; }
+  .field label { font-size: 14px; }
+  .field textarea { min-height: 110px; }
+  .channels { gap: 12px; }
+  .channel { padding: 16px 18px; gap: 14px; }
+  .channel-text b { font-size: 17px; }
+  .channel-text small { font-size: 13.5px; }
+  .site-footer { padding-block: 28px; }
+  .footer-row { flex-direction: column; align-items: center; text-align: center; gap: 16px; }
+  .footer-row img { height: 58px; }
+  .footer-links { flex-wrap: wrap; justify-content: center; gap: 10px 20px; }
+}
+@media (max-width: 768px) and (hover: none) {
+  .work-cap { opacity: 1; transform: none; padding: 30px 14px 12px; }
+  .work-cap b { font-size: 14.5px; }
+  .work-cap small { font-size: 12px; }
+}
+@media (max-width: 560px) {
+  body { font-size: 16px; }
+  .why-grid { grid-template-columns: 1fr; }
+  .masonry { columns: 1; }
+  .btn { padding: 13px 22px; }
+  .hero-actions .btn { flex: 1 1 100%; }
+  .header-cta { padding: 9px 16px; font-size: 14px; }
+  .channel { padding: 18px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+
+/* ===== إضافات: الأسعار + آراء العملاء (تعتمد على متغيرات وأصناف موقعك الحالية) ===== */
+.pr-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; align-items: stretch; }
+.pr-card { padding: 32px 28px 26px; display: flex; flex-direction: column; gap: 14px; }
+.pr-head { display: flex; align-items: center; gap: 14px; padding-bottom: 8px; }
+.pr-head h3 { font-size: 19px; font-weight: 700; }
+.pr-list { list-style: none; margin: 0; padding: 0; }
+.pr-item { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 13px 0; border-top: 1px solid var(--line); transition: color .2s; }
+.pr-name { display: grid; gap: 1px; min-width: 0; }
+.pr-name b { font-family: var(--font-display); font-size: 15.5px; font-weight: 500; line-height: 1.5; transition: color .2s; }
+.pr-name small { color: var(--muted); font-size: 13.5px; }
+.pr-item:hover .pr-name b { color: var(--neon); }
+.pr-price { font-family: var(--font-display); font-size: 22px; font-weight: 700; color: var(--neon); line-height: 1.2; flex: none; }
+.pr-notes { list-style: none; margin: 28px 0 0; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px 30px; color: var(--muted); font-size: 14.5px; }
+.pr-notes li { display: flex; gap: 10px; align-items: center; }
+.pr-notes li::before { content: ""; flex: none; width: 7px; height: 7px; background: var(--neon); transform: rotate(45deg); box-shadow: 0 0 8px var(--neon-glow); }
+
+.rv-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+.rv-card { padding: 30px 28px 32px; display: grid; gap: 12px; align-content: start; }
+.rv-card h3 { font-size: 18px; font-weight: 600; }
+.rv-stars { display: flex; gap: 4px; color: var(--neon); }
+.rv-stars svg { width: 18px; height: 18px; }
+.rv-card p { color: var(--muted); font-size: 16.5px; line-height: 1.9; margin-top: 4px; }
+
+/* تجاوب: لابتوب (3 أعمدة) ← تابلت (عمودان، والثالث بعرض كامل) ← جوال (عمود واحد) */
+.pr-item { min-height: 48px; }
+.pr-card, .rv-card { min-width: 0; }
+@media (max-width: 1023px) {
+  .pr-grid, .rv-grid { grid-template-columns: repeat(2, 1fr); }
+  .pr-card:nth-child(3), .rv-card:nth-child(3) { grid-column: 1 / -1; }
+  .pr-card:nth-child(3) .pr-list { display: grid; grid-template-columns: 1fr 1fr; column-gap: 36px; }
+  .rv-card:nth-child(3) p { max-width: 62ch; }
+}
+@media (max-width: 768px) {
+  .pr-grid, .rv-grid { gap: 16px; }
+  .pr-card { padding: 26px 22px 22px; }
+  .pr-head h3 { font-size: 18px; }
+  .pr-price { font-size: 21px; }
+  .pr-notes { gap: 8px 22px; font-size: 14px; justify-content: flex-start; margin-top: 22px; }
+  .rv-card { padding: 24px 22px 26px; }
+  .rv-card p { font-size: 16px; }
+}
+@media (max-width: 640px) {
+  .pr-grid, .rv-grid { grid-template-columns: 1fr; }
+  .pr-card:nth-child(3), .rv-card:nth-child(3) { grid-column: auto; }
+  .pr-card:nth-child(3) .pr-list { display: block; }
+  .rv-card:nth-child(3) p { max-width: none; }
+}
+@media (max-width: 360px) {
+  .pr-card { padding: 22px 16px 18px; }
+  .pr-name b { font-size: 15px; }
+  .pr-price { font-size: 20px; }
+}
+/* ===== نهاية الإضافات ===== */
+</style>
+<style>html,body{margin:0}[hidden]{display:none!important}</style>
+</head>
+<body>
+<div dir="rtl" lang="ar" id="top">
+
+<header class="site-header" id="siteHeader">
+  <div class="wrap header-row">
+    <a class="brand" href="#top" aria-label="ورقة، الصفحة الرئيسية"><img src="Logow.png" alt="شعار ورقة" width="29" height="62"></a>
+    <nav class="nav" aria-label="التنقل الرئيسي">
+      <a href="#about">عن ورقة</a>
+      <a href="#services">خدماتنا</a>
+      <a href="#pricing">الأسعار</a>
+      <a href="#portfolio">معرض الأعمال</a>
+      <a href="#why">لماذا ورقة؟</a>
+      <a href="#contact">التواصل</a>
+    </nav>
+    <a class="btn btn-primary header-cta" href="#contact">اطلب خدمتك</a>
+  </div>
+</header>
+
+<main>
+<section class="section hero">
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <span class="eyebrow">منصة إبداعية متكاملة</span>
+      <h1>فكرتك من <span class="accent">ورقة</span>، الى واقع ملموس</h1>
+      <p class="lead">ورقة تجمع تنسيق الأبحاث والعروض، ومونتاج المحتوى، وتصميم هوية المتاجر في مكان واحد. ندقق في التفاصيل مثل الأكاديمي، ونصمم بلمسة فنية معاصرة.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#contact">اطلب خدمتك الآن
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+        </a>
+        <a class="btn btn-ghost" href="#services">استكشف خدماتنا</a>
+      </div>
+    </div>
+    <div class="stack" aria-hidden="true">
+      <div class="page p1"><i></i><i></i><i></i></div>
+      <div class="page p2"><i></i><i></i><i></i></div>
+      <div class="page p3"><i></i><i></i><i></i></div>
+      <span class="chip c1">تنسيق أبحاث</span>
+      <span class="chip c2">مونتاج ريلز</span>
+      <span class="chip c3">هوية بصرية</span>
+      <span class="chip c4">عروض تقديمية</span>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="about">
+  <div class="wrap about-grid">
+    <div class="section-head" style="margin-bottom:0">
+      <span class="eyebrow">عن ورقة</span>
+      <h2>دقة الأكاديمي، ولمسة الفنان</h2>
+    </div>
+    <div class="about-body">
+      <p>ورقة منصة إبداعية متكاملة تدعم <strong>الطلاب وصناع المحتوى وأصحاب المتاجر</strong>. نمزج بين الدقة الأكاديمية واللمسة الفنية المعاصرة، حتى يخرج عملك مرتبًا في شكله وواضحًا في فكرته.</p>
+      <p>سواء كنت تسلّم بحثًا، أو تنشر ريلز، أو تطلق مشروعك الجديد، نحول فكرتك إلى عمل جاهز تفتخر بعرضه.</p>
+      <div class="audience">
+        <span>طلاب</span><span>صناع محتوى</span><span>أصحاب متاجر</span><span>مشاريع ناشئة</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section services" id="services">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">شبكة الخدمات</span>
+      <h2>ثلاثة مسارات، وجهة واحدة</h2>
+      <p>اختر المسار الذي يناسبك، وسنتولى الباقي من الفكرة إلى التسليم.</p>
+    </div>
+    <div class="svc-grid">
+      <article class="sheet svc">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10 12 5 2 10l10 5 10-5z"/><path d="M6 12v5c0 1.2 2.7 3 6 3s6-1.8 6-3v-5"/><path d="M22 10v6"/></svg></div>
+        <h3>الخدمات الطلابية والأكاديمية</h3>
+        <ul>
+          <li>تنسيق البحوث والتقارير وفق المعايير الأكاديمية</li>
+          <li>عروض تقديمية احترافية بتسلسل واضح</li>
+          <li>تصميم المواد التعليمية والإنفوجرافيك</li>
+        </ul>
+      </article>
+      <article class="sheet svc">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="15" height="14" rx="2"/><path d="m17 10 5-3v10l-5-3"/><path d="m8 9.5 4 2.5-4 2.5z"/></svg></div>
+        <h3>صناعة المحتوى والمونتاج</h3>
+        <ul>
+          <li>مونتاج فيديوهات الريلز والشورتس</li>
+          <li>تايبوغرافي متحرك (Kinetic Typography)</li>
+          <li>موشن جرافيك يشد الانتباه من أول ثانية</li>
+        </ul>
+      </article>
+      <article class="sheet svc">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9 4.5 4h15L21 9"/><path d="M3 9a3 3 0 0 0 6 0 3 3 0 0 0 6 0 3 3 0 0 0 6 0"/><path d="M5 12v8h14v-8"/><path d="M10 20v-4h4v4"/></svg></div>
+        <h3>تصاميم المتاجر والمشاريع</h3>
+        <ul>
+          <li>بناء الهوية البصرية والشعارات</li>
+          <li>تصاميم السوشيال ميديا والبنرات الإعلانية</li>
+          <li>تصميم واجهات المتاجر الإلكترونية</li>
+        </ul>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ===== قسم الأسعار: الصقيه بعد قسم الخدمات (قبل قسم معرض الأعمال) ===== -->
+<section class="section" id="pricing">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">الأسعار</span>
+      <h2>تسعير بسيط وواضح</h2>
+      <p>اضغط على الخدمة اللي تحتاجها وابدأ طلبك. الأسعار بالريال السعودي وتبدأ من الرقم المعروض.</p>
+    </div>
+    <div class="pr-grid">
+      <article class="sheet pr-card">
+        <div class="pr-head"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10 12 5 2 10l10 5 10-5z"/><path d="M6 12v5c0 1.2 2.7 3 6 3s6-1.8 6-3v-5"/><path d="M22 10v6"/></svg></div><h3>الخدمات الطلابية والأكاديمية</h3></div>
+        <ul class="pr-list">
+          <li><a class="pr-item" href="#contact" data-order-service="الخدمات الأكاديمية" data-order-item="خريطة ذهنية أو ملخص مصمم">
+            <span class="pr-name"><b>خريطة ذهنية أو ملخص مصمم</b></span><span class="pr-price">25</span></a></li>
+          <li><a class="pr-item" href="#contact" data-order-service="الخدمات الأكاديمية" data-order-item="إنفوجرافيك أو مادة تعليمية">
+            <span class="pr-name"><b>إنفوجرافيك أو مادة تعليمية</b></span><span class="pr-price">50</span></a></li>
+          <li><a class="pr-item" href="#contact" data-order-service="الخدمات الأكاديمية" data-order-item="عرض تقديمي (حتى 15 شريحة)">
+            <span class="pr-name"><b>عرض تقديمي</b><small>حتى 15 شريحة</small></span><span class="pr-price">60</span></a></li>
+          <li><a class="pr-item" href="#contact" data-order-service="الخدمات الأكاديمية" data-order-item="تنسيق بحث أو تقرير (حتى 20 صفحة)">
+            <span class="pr-name"><b>تنسيق بحث أو تقرير</b><small>حتى 20 صفحة</small></span><span class="pr-price">80</span></a></li>
+        </ul>
+      </article>
+      <article class="sheet pr-card">
+        <div class="pr-head"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="15" height="14" rx="2"/><path d="m17 10 5-3v10l-5-3"/><path d="m8 9.5 4 2.5-4 2.5z"/></svg></div><h3>صناعة المحتوى والمونتاج</h3></div>
+        <ul class="pr-list">
+          <li><a class="pr-item" href="#contact" data-order-service="المونتاج والريلز" data-order-item="مونتاج ريلز بسيط (حتى 30 ثانية)">
+            <span class="pr-name"><b>مونتاج ريلز بسيط</b><small>حتى 30 ثانية</small></span><span class="pr-price">60</span></a></li>
+          <li><a class="pr-item" href="#contact" data-order-service="المونتاج والريلز" data-order-item="ريلز مع كابشنز ومؤثرات (حتى 60 ثانية)">
+            <span class="pr-name"><b>ريلز مع كابشنز ومؤثرات</b><small>حتى 60 ثانية</small></span><span class="pr-price">100</span></a></li>
+          <li><a class="pr-item" href="#contact" data-order-service="المونتاج والريلز" data-order-item="تايبوغرافي متحرك (حتى 15 ثانية)">
+            <span class="pr-name"><b>تايبوغرافي متحرك</b><small>حتى 15 ثانية</small></span><span class="pr-price">150</span></a></li>
+          <li><a class="pr-item" href="#contact" data-order-service="المونتاج والريلز" data-order-item="موشن جرافيك (من 15 إلى 30 ثانية)">
+            <span class="pr-name"><b>موشن جرافيك</b><small>من 15 إلى 30 ثانية</small></span><span class="pr-price">300</span></a></li>
+          <li><a class="pr-item" href="#contact" data-order-service="المونتاج والريلز" data-order-item="باقة شهرية: 8 ريلز">
+            <span class="pr-name"><b>باقة شهرية</b><small>8 ريلز في الشهر</small></span><span class="pr-price">600</span></a></li>
+        </ul>
+      </article>
+      <article class="sheet pr-card">
+        <div class="pr-head"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9 4.5 4h15L21 9"/><path d="M3 9a3 3 0 0 0 6 0 3 3 0 0 0 6 0 3 3 0 0 0 6 0"/><path d="M5 12v8h14v-8"/><path d="M10 20v-4h4v4"/></svg></div><h3>تصاميم المتاجر والمشاريع</h3></div>
+        <ul class="pr-list">
+          <li><a class="pr-item" href="#contact" data-order-service="تصاميم المتاجر" data-order-item="تصميم بوست سوشيال أو بنر إعلاني">
+            <span class="pr-name"><b>بوست سوشيال أو بنر</b></span><span class="pr-price">30</span></a></li>
+          <li><a class="pr-item" href="#contact" data-order-service="تصاميم المتاجر" data-order-item="باقة 8 بوستات بهوية موحّدة">
+            <span class="pr-name"><b>باقة 8 بوستات</b><small>بهوية موحّدة</small></span><span class="pr-price">220</span></a></li>
+          <li><a class="pr-item" href="#contact" data-order-service="تصاميم المتاجر" data-order-item="قائمة طعام أو بروشور">
+            <span class="pr-name"><b>قائمة طعام أو بروشور</b></span><span class="pr-price">100</span></a></li>
+          <li><a class="pr-item" href="#contact" data-order-service="تصاميم المتاجر" data-order-item="تصميم شعار (3 مقترحات + تعديلان)">
+            <span class="pr-name"><b>تصميم شعار</b><small>3 مقترحات + تعديلان</small></span><span class="pr-price">250</span></a></li>
+          <li><a class="pr-item" href="#contact" data-order-service="تصاميم المتاجر" data-order-item="تصميم واجهة متجر إلكتروني">
+            <span class="pr-name"><b>واجهة متجر إلكتروني</b></span><span class="pr-price">300</span></a></li>
+          <li><a class="pr-item" href="#contact" data-order-service="تصاميم المتاجر" data-order-item="هوية بصرية متكاملة">
+            <span class="pr-name"><b>هوية بصرية متكاملة</b></span><span class="pr-price">800</span></a></li>
+        </ul>
+      </article>
+    </div>
+    <ul class="pr-notes">
+      <li>جولتا تعديل مجانيتان</li>
+      <li>التسليم المستعجل خلال 24 ساعة: +30%</li>
+      <li>الدفع: 50% مقدمًا والباقي عند التسليم</li>
+    </ul>
+  </div>
+</section>
+
+<section class="section" id="portfolio">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">معرض الأعمال</span>
+      <h2>أعمال خرجت من ورقة</h2>
+      <p>نماذج من تصاميمنا في الهوية، والمطبوعات، والمواد الأكاديمية. اضغط على أي عمل لتكبيره.</p>
+    </div>
+    <div class="filters" role="group" aria-label="تصفية الأعمال">
+      <button class="filter" type="button" data-filter="all" aria-pressed="true">الكل</button>
+      <button class="filter" type="button" data-filter="brand" aria-pressed="false">هويات وشعارات</button>
+      <button class="filter" type="button" data-filter="print" aria-pressed="false">مطبوعات ومناسبات</button>
+      <button class="filter" type="button" data-filter="academic" aria-pressed="false">أكاديمي</button>
+    </div>
+    <div class="masonry" id="gallery">
+      <button class="work" type="button" data-cat="print" data-title="قائمة طعام" data-sub="فنجان شغل">
+        <img src="work4.png" alt="تصميم قائمة طعام لمشروع فنجان شغل" loading="lazy" width="990" height="1400">
+        <span class="work-cap"><b>قائمة طعام</b><small>فنجان شغل</small></span>
+      </button>
+      <button class="work" type="button" data-cat="academic" data-title="عرض تقديمي أكاديمي" data-sub="جامعة طيبة">
+        <img src="work3.png" alt="غلاف عرض تقديمي أكاديمي" loading="lazy" width="1400" height="788">
+        <span class="work-cap"><b>عرض تقديمي أكاديمي</b><small>غلاف بحث جامعي</small></span>
+      </button>
+      <button class="work" type="button" data-cat="academic" data-title="بروشور إرشادي" data-sub="دليل تطبيق حضوري">
+        <img src="work1.jpg" alt="بروشور إرشادي لتطبيق حضوري" loading="lazy" width="1400" height="990">
+        <span class="work-cap"><b>بروشور إرشادي</b><small>دليل تطبيق حضوري</small></span>
+      </button>
+      <button class="work" type="button" data-cat="brand" data-title="شعار مقهى ومخبز" data-sub="لُب">
+        <img src="work2.png" alt="شعار لُب لمقهى ومخبز" loading="lazy" width="500" height="500">
+        <span class="work-cap"><b>شعار مقهى ومخبز</b><small>لُب</small></span>
+      </button>
+      <button class="work" type="button" data-cat="print" data-title="بطاقة تهنئة عيد الفطر" data-sub="مؤسسة سنابل الوقفية">
+        <img src="work5.png" alt="بطاقة تهنئة بعيد الفطر لمؤسسة سنابل الوقفية" loading="lazy" width="990" height="1400">
+        <span class="work-cap"><b>بطاقة تهنئة عيد الفطر</b><small>مؤسسة سنابل الوقفية</small></span>
+      </button>
+      <button class="work" type="button" data-cat="brand" data-title="شعار تسويق عقاري" data-sub="لطيفة للعقارات">
+        <img src="work6.png" alt="شعار لطيفة للعقارات" loading="lazy" width="1400" height="1400">
+        <span class="work-cap"><b>شعار تسويق عقاري</b><small>لطيفة للعقارات</small></span>
+      </button>
+      <button class="work" type="button" data-cat="brand" data-title="تصميم هوية بصرية" data-sub="شروق كوفي">
+        <img src="work7.jpg" alt="تصميم هوية بصرية لمقهى شروق كوفي: شعار وأكواب وكيس وملصقات" loading="lazy" width="2576" height="1506">
+        <span class="work-cap"><b>تصميم هوية بصرية</b><small>شروق كوفي</small></span>
+      </button>
+      <div class="work flip" role="button" tabindex="0" aria-pressed="false" aria-label="تصميم إنفوجرافيك ثنائي اللغة - عقارات. اضغط لقلب البطاقة بين النسخة العربية والإنجليزية" data-cat="print" data-nolightbox="1" data-title="تصميم إنفوجرافيك ثنائي اللغة" data-sub="عقارات">
+        <div class="flip-inner">
+          <div class="flip-face flip-front">
+            <img src="work9.png" alt="إنفوجرافيك خطوات تمليك عقار - النسخة العربية" loading="lazy" width="3375" height="4219">
+            <span class="flip-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 0 0-15.5-6.2L3 8"/><path d="M3 3v5h5"/><path d="M3 12a9 9 0 0 0 15.5 6.2L21 16"/><path d="M21 21v-5h-5"/></svg>EN</span>
+            <span class="work-cap"><b>تصميم إنفوجرافيك ثنائي اللغة</b><small>عقارات</small></span>
+          </div>
+          <div class="flip-face flip-back">
+            <img src="work8.png" alt="Home buying process steps infographic - English version" loading="lazy" width="3375" height="4219">
+            <span class="flip-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 0 0-15.5-6.2L3 8"/><path d="M3 3v5h5"/><path d="M3 12a9 9 0 0 0 15.5 6.2L21 16"/><path d="M21 21v-5h-5"/></svg>عربي</span>
+            <span class="work-cap"><b>تصميم إنفوجرافيك ثنائي اللغة</b><small>عقارات</small></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section services" id="why">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">لماذا ورقة؟</span>
+      <h2>أربع أسباب تجعل طلبك عندنا أسهل</h2>
+    </div>
+    <div class="why-grid">
+      <article class="sheet why">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg></div>
+        <span class="big">SPEED</span>
+        <h3>السرعة</h3>
+        <p>نلتزم بمواعيد التسليم، لأن وقتك أثمن من أن يضيع في الانتظار.</p>
+      </article>
+      <article class="sheet why">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="6"/><path d="m8.5 14.5-1.5 7 5-3 5 3-1.5-7"/></svg></div>
+        <span class="big">QUALITY</span>
+        <h3>الجودة</h3>
+        <p>نراجع كل عمل بعين المدقق قبل أن يصلك، من الخطوط إلى الهوامش.</p>
+      </article>
+      <article class="sheet why">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/></svg></div>
+        <span class="big">INNOVATION</span>
+        <h3>الابتكار</h3>
+        <p>أفكار بصرية جديدة تميّز عملك بين آلاف الأعمال المتشابهة.</p>
+      </article>
+      <article class="sheet why">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.6 13.4 13.4 20.6a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8z"/><circle cx="7.5" cy="7.5" r="1.2"/></svg></div>
+        <span class="big">AFFORDABLE</span>
+        <h3>الأسعار المناسبة</h3>
+        <p>أسعار مناسبة للطلاب والمشاريع الناشئة، بدون التنازل عن المستوى.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ===== قسم آراء العملاء: الصقيه بعد قسم "لماذا ورقة؟" (قبل قسم التواصل) ===== -->
+<!-- لإضافة رأي جديد: انسخ أي بطاقة <article class="sheet rv-card"> كاملة وعدّل الاسم والنص -->
+<section class="section" id="reviews">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">آراء العملاء</span>
+      <h2>آراء عملائنا</h2>
+    </div>
+    <div class="rv-grid">
+      <article class="sheet rv-card">
+        <h3>سارة</h3>
+        <div class="rv-stars" role="img" aria-label="التقييم 5 من 5"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4 6.1 20.5l1.2-6.5L2.5 9.4l6.6-.9z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4 6.1 20.5l1.2-6.5L2.5 9.4l6.6-.9z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4 6.1 20.5l1.2-6.5L2.5 9.4l6.6-.9z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4 6.1 20.5l1.2-6.5L2.5 9.4l6.6-.9z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4 6.1 20.5l1.2-6.5L2.5 9.4l6.6-.9z"/></svg></div>
+        <p>أخذت الدرجة كاملة على المشروع، التنسيق بيرفكت!</p>
+      </article>
+      <article class="sheet rv-card">
+        <h3>أ. ريم</h3>
+        <div class="rv-stars" role="img" aria-label="التقييم 5 من 5"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4 6.1 20.5l1.2-6.5L2.5 9.4l6.6-.9z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4 6.1 20.5l1.2-6.5L2.5 9.4l6.6-.9z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4 6.1 20.5l1.2-6.5L2.5 9.4l6.6-.9z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4 6.1 20.5l1.2-6.5L2.5 9.4l6.6-.9z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4 6.1 20.5l1.2-6.5L2.5 9.4l6.6-.9z"/></svg></div>
+        <p>عمل ممتاز، الله يعطيكم العافية.</p>
+      </article>
+      <article class="sheet rv-card">
+        <h3>أ. خالد</h3>
+        <div class="rv-stars" role="img" aria-label="التقييم 5 من 5"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4 6.1 20.5l1.2-6.5L2.5 9.4l6.6-.9z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4 6.1 20.5l1.2-6.5L2.5 9.4l6.6-.9z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4 6.1 20.5l1.2-6.5L2.5 9.4l6.6-.9z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4 6.1 20.5l1.2-6.5L2.5 9.4l6.6-.9z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4 6.1 20.5l1.2-6.5L2.5 9.4l6.6-.9z"/></svg></div>
+        <p>بعتمدكم تماماً، أسعاركم جداً منطقية بالنسبة للسوق.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="contact">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">التواصل والطلب</span>
+      <h2>جاهز نبدأ؟ اطلب خدمتك الآن</h2>
+      <p>املأ النموذج وسنجهّز لك رسالة الطلب، ثم أرسلها لنا على واتساب أو تيليجرام. أو تواصل معنا مباشرة من القنوات الجانبية.</p>
+    </div>
+    <div class="contact-grid">
+      <form class="sheet form-card" id="orderForm" action="https://api.staticforms.dev/submit" method="POST">
+        <h3>نموذج طلب الخدمة</h3>
+        <input type="hidden" name="apiKey" value="sf_6c7dd9fa47d11d92ccd8fb0d">
+        <input type="hidden" name="subject" value="طلب خدمة جديد من موقع ورقة">
+        <input type="hidden" name="redirectTo" id="redirectTo" value="thank-you.html">
+
+        <div class="field">
+          <label for="f-name">الاسم الكامل *</label>
+          <input id="f-name" type="text" name="name" placeholder="اكتب اسمك" autocomplete="name" required>
+        </div>
+        <div class="field">
+          <label for="f-email">البريد الإلكتروني *</label>
+          <input id="f-email" type="email" name="email" placeholder="name@example.com" autocomplete="email" dir="ltr" style="text-align:right" required>
+        </div>
+        <div class="field">
+          <label for="f-service">نوع الخدمة *</label>
+          <select id="f-service" name="service" required>
+            <option value="" disabled selected>اختر الخدمة المناسبة</option>
+            <option value="الخدمات الأكاديمية">الخدمات الأكاديمية</option>
+            <option value="المونتاج والريلز">المونتاج والريلز</option>
+            <option value="تصاميم المتاجر">تصاميم المتاجر</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="f-msg">تفاصيل الطلب *</label>
+          <textarea id="f-msg" name="message" rows="5" placeholder="اشرح لنا ما تحتاجه، والموعد المطلوب إن وجد" required></textarea>
+        </div>
+        <button class="btn btn-primary" type="submit">إرسال طلب الخدمة
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+        </button>
+        <p class="form-note">سنصلك الرد على بريدك الإلكتروني. للاستعجال تواصل معنا مباشرة من القنوات المجاورة.</p>
+        <script>
+          document.getElementById('redirectTo').value = new URL('thank-you.html', window.location.href).href;
+        </script>
+      </form>
+
+      <div class="channels">
+        <h3>أو تواصل معنا مباشرة</h3>
+        <a class="sheet channel" href="https://wa.me/message/W3QLSWVQ6SA2A1" target="_blank" rel="noopener noreferrer">
+          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 20.5l1.7-5.4A8.4 8.4 0 1 1 21 11.5z"/><path d="M9 9.2c.2 2.6 2.9 5.3 5.6 5.6l1.4-1.2-2-1.2-.9.7c-.9-.3-1.9-1.3-2.2-2.2l.7-.9-1.2-2z"/></svg></span>
+          <span class="channel-text"><b>واتساب</b><small>رد سريع على الطلبات</small></span>
+          <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+        </a>
+        <a class="sheet channel" href="https://t.me/+966560615534" target="_blank" rel="noopener noreferrer">
+          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 3 2.8 10.3c-.8.3-.8 1.4 0 1.7l4.7 1.6 1.8 5.6c.2.7 1.1.9 1.6.4l2.6-2.4 4.5 3.3c.6.4 1.3.1 1.5-.6L22.7 4c.2-.8-.5-1.3-1.2-1z"/><path d="m7.5 13.6 10-6.3-7.7 8.2"/></svg></span>
+          <span class="channel-text"><b>تيليجرام</b><small>للمشاريع والملفات الكبيرة</small></span>
+          <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+        </a>
+        <a class="sheet channel" href="https://www.tiktok.com/@warqa_support?_r=1&amp;_t=ZS-9ANA1kx3lLe" target="_blank" rel="noopener noreferrer">
+          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3v11.5a3.5 3.5 0 1 1-3.5-3.5"/><path d="M14 3c.3 2.6 2 4.4 5 4.7"/></svg></span>
+          <span class="channel-text"><b>تيك توك</b><small dir="ltr" style="text-align:start">@warqa_support</small></span>
+          <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-row">
+    <img src="Logow.png" alt="ورقة" width="34" height="72">
+    <nav class="footer-links" aria-label="روابط التذييل">
+      <a href="#about">عن ورقة</a><a href="#services">خدماتنا</a><a href="#portfolio">الأعمال</a><a href="#contact">التواصل</a>
+    </nav>
+    <nav class="footer-links footer-social" aria-label="تواصل اجتماعي"><a href="https://wa.me/message/W3QLSWVQ6SA2A1" target="_blank" rel="noopener noreferrer">واتساب</a><a href="https://t.me/+966560615534" target="_blank" rel="noopener noreferrer">تيليجرام</a><a href="https://www.tiktok.com/@warqa_support?_r=1&amp;_t=ZS-9ANA1kx3lLe" target="_blank" rel="noopener noreferrer">تيك توك</a></nav>
+    <p>© 2026 ورقة. جميع الحقوق محفوظة.</p>
+  </div>
+</footer>
+
+<div class="lightbox" id="lightbox" hidden role="dialog" aria-modal="true" aria-label="عرض العمل">
+  <button class="lb-close" type="button" id="lbClose" aria-label="إغلاق"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+  <figure><img id="lbImg" alt=""><figcaption id="lbCap"></figcaption></figure>
+</div>
+
+</div>
+
+<script>
+document.documentElement.setAttribute('dir', 'rtl');
+document.documentElement.setAttribute('lang', 'ar');
+
+(function () {
+  var header = document.getElementById('siteHeader');
+  function onScroll() { header.classList.toggle('scrolled', window.scrollY > 8); }
+  window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
+
+  var works = Array.prototype.slice.call(document.querySelectorAll('#gallery .work'));
+  var filters = document.querySelectorAll('.filter');
+  filters.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var f = btn.getAttribute('data-filter');
+      filters.forEach(function (b) { b.setAttribute('aria-pressed', b === btn ? 'true' : 'false'); });
+      works.forEach(function (w) {
+        var show = f === 'all' || w.getAttribute('data-cat') === f;
+        w.hidden = !show;
+      });
+    });
+  });
+
+  var lb = document.getElementById('lightbox'), lbImg = document.getElementById('lbImg'), lbCap = document.getElementById('lbCap');
+  function closeLb() { lb.hidden = true; lbImg.removeAttribute('src'); }
+  works.forEach(function (w) {
+    if (w.getAttribute('data-nolightbox')) return;
+    w.addEventListener('click', function () {
+      var img = w.querySelector('img');
+      lbImg.src = img.src; lbImg.alt = img.alt;
+      lbCap.textContent = w.getAttribute('data-title') + ' · ' + w.getAttribute('data-sub');
+      lb.hidden = false;
+    });
+  });
+  lb.addEventListener('click', closeLb);
+  document.getElementById('lbClose').addEventListener('click', function (e) { e.stopPropagation(); closeLb(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !lb.hidden) closeLb(); });
+})();
+</script>
+
+<script>
+/* تعبئة نموذج الطلب عند الضغط على خدمة من قائمة الأسعار */
+(function () {
+  var svc = document.getElementById('f-service');
+  var msg = document.getElementById('f-msg');
+  if (msg) msg.addEventListener('input', function () { msg.removeAttribute('data-prefilled'); });
+  document.querySelectorAll('[data-order-service]').forEach(function (a) {
+    a.addEventListener('click', function () {
+      if (svc) svc.value = a.getAttribute('data-order-service');
+      var item = a.getAttribute('data-order-item');
+      if (msg && item && (!msg.value.trim() || msg.getAttribute('data-prefilled'))) {
+        msg.value = 'أبغى أطلب: ' + item + '\nتفاصيل الطلب: ';
+        msg.setAttribute('data-prefilled', '1');
+      }
+    });
+  });
+})();
+</script>
+
+<script>
+/* بطاقة القلب: على الجوال واللوحي (بدون ماوس) اللمس يقلب البطاقة، وعلى الكمبيوتر يكفي تمرير الماوس */
+(function () {
+  var noHover = window.matchMedia('(hover: none)');
+  document.querySelectorAll('.flip').forEach(function (card) {
+    function toggle() {
+      var on = card.classList.toggle('is-flipped');
+      card.setAttribute('aria-pressed', on ? 'true' : 'false');
+    }
+    card.addEventListener('click', function () { if (noHover.matches) toggle(); });
+    card.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); if (noHover.matches) toggle(); }
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
